@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 class Book extends Component {
-  state = {};
   render() {
     const { book, changeShelf } = this.props;
+
+    let thumbnail = book.imageLinks ? book.imageLinks.thumbnail : '';
+
     return (
       <div className="book">
         <div className="book-top">
@@ -12,11 +16,11 @@ class Book extends Component {
             style={{
               width: 128,
               height: 193,
-              backgroundImage: `url("${book.imageLinks.thumbnail}")`
+              backgroundImage: `url('${thumbnail}')`
             }}
           />
           <div className="book-shelf-changer">
-            <select onChange={e => changeShelf(book, e.target.value)} value={book.shelf}>
+            <select onChange={(e) => changeShelf(book, e.target.value)} value={book.shelf}>
               <option value="move" disabled>
                 Move to...
               </option>

@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import Book from './Book';
 
 class BookShelf extends Component {
-  state = {};
   render() {
     const { filteredBooks, changeShelf } = this.props;
-    console.log(filteredBooks);
     return (
       <div className="bookshelf">
         <h2 className="bookshelf-title">{this.props.shelfTitle}</h2>
