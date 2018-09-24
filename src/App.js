@@ -42,6 +42,7 @@ class BooksApp extends React.Component {
                 this.changeShelf(book, shelf);
                 history.push('/');
               }}
+              shelfBooks={this.state.books}
             />
           )}
         />

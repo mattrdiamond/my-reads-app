@@ -12,28 +12,41 @@ class Search extends Component {
   // 1. update state to equal query
   updateQuery = (query) => {
     this.setState({ queryValue: query });
-    this.updateSearchedBooks(query);
+    this.fetchSearchedBooks(query);
   };
 
   // 2. fetch matching books and update searchedBooks
-  updateSearchedBooks = (query) => {
+  fetchSearchedBooks = (query) => {
     if (query) {
-      BooksAPI.search(query).then((searchedBooks) => {
-        // if (searchedBooks.length > 0) {
-        //   this.setState({ searchedBooks: searchedBooks });
-        // } else {
-        //   this.setState({ searchedBooks: [] });
-        // }
-        if (searchedBooks.error) {
+      BooksAPI.search(query).then((response) => {
+        console.log('response:' + response);
+        if (response.error) {
           this.setState({ searchedBooks: [] });
+          console.log('no match');
         } else {
-          this.setState({ searchedBooks: searchedBooks });
+          this.updateShelf(response);
+          console.log('match found! run updateBooks');
         }
       });
-    } else {
-      this.setState({ searchedBooks: [] });
     }
   };
+
+  // 3. compare searched books to shelf books and update shelf if match
+  updateShelf(books) {
+    const { shelfBooks } = this.props;
+    const categorizedBooks = books.map((book) => {
+      book.shelf = 'none';
+      for (let shelfBook of shelfBooks) {
+        if (book.id === shelfBook.id) {
+          book.shelf = shelfBook.shelf;
+        }
+      }
+      return book;
+    });
+    this.setState({
+      searchedBooks: categorizedBooks
+    });
+  }
 
   render() {
     const { queryValue, searchedBooks } = this.state;
@@ -57,11 +70,20 @@ class Search extends Component {
         <div className="search-books-results">
           <ol className="books-grid">
             {/* 3. display matching books */}
-            {searchedBooks.map((searchedBook) => (
-              <li key={searchedBook.id}>
-                <Book book={searchedBook} changeShelf={changeShelf} />
-              </li>
-            ))}
+            {/* {searchedBooks.map((searchedBook) => {
+              return (
+                <li key={searchedBook.id}>
+                  <Book book={searchedBook} changeShelf={changeShelf} />
+                </li>
+              );
+            })} */}
+            {searchedBooks.map((searchedBook) => {
+              return (
+                <li key={searchedBook.id}>
+                  <Book book={searchedBook} changeShelf={changeShelf} />
+                </li>
+              );
+            })}
           </ol>
         </div>
       </div>
