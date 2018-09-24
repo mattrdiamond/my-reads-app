@@ -2,9 +2,15 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class Book extends Component {
+  static propTypes = {
+    book: PropTypes.object.isRequired,
+    changeShelf: PropTypes.func.isRequired
+  };
+
   render() {
     const { book, changeShelf } = this.props;
 
+    // if thumbnail image missing, set equal to empty string
     let thumbnail = book.imageLinks ? book.imageLinks.thumbnail : '';
 
     return (
@@ -19,7 +25,10 @@ class Book extends Component {
             }}
           />
           <div className="book-shelf-changer">
-            <select onChange={(e) => changeShelf(book, e.target.value)} value={book.shelf}>
+            <select
+              onChange={(e) => changeShelf(book, e.target.value)}
+              value={book.shelf || 'none'}
+            >
               <option value="move" disabled>
                 Move to...
               </option>
@@ -31,7 +40,7 @@ class Book extends Component {
           </div>
         </div>
         <div className="book-title">{book.title}</div>
-        <div className="book-authors">{book.authors}</div>
+        <div className="book-authors">{book.authors || 'No Author'}</div>
       </div>
     );
   }

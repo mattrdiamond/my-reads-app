@@ -3,9 +3,10 @@ import BookShelf from '../BookShelf';
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 
-class ListBooks extends Component {
+class MainPage extends Component {
   static propTypes = {
-    shelfBooks: PropTypes.array.isRequired
+    shelfBooks: PropTypes.array.isRequired,
+    changeShelf: PropTypes.func.isRequired
   };
 
   render() {
@@ -18,17 +19,17 @@ class ListBooks extends Component {
         <div className="list-books-content">
           <div>
             <BookShelf
-              filteredBooks={shelfBooks.filter((book) => book.shelf === 'currentlyReading')}
+              shelfBooks={shelfBooks.filter((book) => book.shelf === 'currentlyReading')}
               shelfTitle="Currently Reading"
               changeShelf={changeShelf}
             />
             <BookShelf
-              filteredBooks={shelfBooks.filter((book) => book.shelf === 'wantToRead')}
+              shelfBooks={shelfBooks.filter((book) => book.shelf === 'wantToRead')}
               shelfTitle="Want to Read"
               changeShelf={changeShelf}
             />
             <BookShelf
-              filteredBooks={shelfBooks.filter((book) => book.shelf === 'read')}
+              shelfBooks={shelfBooks.filter((book) => book.shelf === 'read')}
               shelfTitle="Read"
               changeShelf={changeShelf}
             />
@@ -42,4 +43,4 @@ class ListBooks extends Component {
   }
 }
 
-export default ListBooks;
+export default MainPage;
