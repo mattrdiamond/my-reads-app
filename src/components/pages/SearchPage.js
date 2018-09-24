@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import * as BooksAPI from '../utils/BooksAPI';
-import Book from './Book';
+import * as BooksAPI from '../../utils/BooksAPI';
+import Book from '../Book';
 
 class Search extends Component {
   state = {
@@ -19,13 +19,10 @@ class Search extends Component {
   fetchSearchedBooks = (query) => {
     if (query) {
       BooksAPI.search(query).then((response) => {
-        console.log('response:' + response);
         if (response.error) {
           this.setState({ searchedBooks: [] });
-          console.log('no match');
         } else {
           this.updateShelf(response);
-          console.log('match found! run updateBooks');
         }
       });
     }
