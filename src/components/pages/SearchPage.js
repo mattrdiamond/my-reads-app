@@ -30,6 +30,8 @@ class SearchPage extends Component {
           this.updateShelf(response);
         }
       });
+    } else {
+      this.setState({ searchedBooks: [] });
     }
   };
 
