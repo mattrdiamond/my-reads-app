@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import * as BooksAPI from '../../utils/BooksAPI';
 import Book from '../Book';
 
-class Search extends Component {
+class SearchPage extends Component {
   state = {
     queryValue: '',
     searchedBooks: []
@@ -66,14 +66,7 @@ class Search extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {/* 3. display matching books */}
-            {/* {searchedBooks.map((searchedBook) => {
-              return (
-                <li key={searchedBook.id}>
-                  <Book book={searchedBook} changeShelf={changeShelf} />
-                </li>
-              );
-            })} */}
+            {/* 4. display searched books */}
             {searchedBooks.map((searchedBook) => {
               return (
                 <li key={searchedBook.id}>
@@ -88,4 +81,4 @@ class Search extends Component {
   }
 }
 
-export default Search;
+export default SearchPage;
